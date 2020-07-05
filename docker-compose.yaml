@@ -1,0 +1,31 @@
+version: '3'
+
+networks:
+    default:
+      external:
+        name: ws_py
+
+services:
+    client:
+        container_name: ws_client
+        build:
+            context: ./
+            dockerfile: build/python/Dockerfile
+        ports:
+            - "8888:8888"
+        command: "python ./app/client.py --endpoint=http://ws_server:8080/ws --client-id=test1"
+        volumes:
+            - $PWD/:/usr/src/app
+        depends_on:
+            - server
+    server:
+        container_name: ws_server
+        build:
+            context: ./
+            dockerfile: build/python/Dockerfile
+        ports:
+            - "8080:8080"
+        command: "python ./app/server.py"
+        volumes:
+            - $PWD/:/usr/src/app
+        restart: 'always'
