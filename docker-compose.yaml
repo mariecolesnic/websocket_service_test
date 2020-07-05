@@ -13,9 +13,9 @@ services:
             dockerfile: build/python/Dockerfile
         ports:
             - "8888:8888"
-        command: "python ./my_env/client.py --endpoint=http://ws_server:8080/ws --client-id=test1"
+        command: "python ./client.py --endpoint=http://ws_server:8080/ws --client-id=test1"
         volumes:
-            - $PWD/:/usr/src/my_env
+            - $PWD/:/usr/src
         depends_on:
             - server
     server:
@@ -25,7 +25,7 @@ services:
             dockerfile: build/python/Dockerfile
         ports:
             - "8080:8080"
-        command: "python ./my_env/server.py"
+        command: "python ./server.py"
         volumes:
-            - $PWD/:/usr/src/my_env
+            - $PWD/:/usr/src
         restart: 'always'
