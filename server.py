@@ -12,11 +12,11 @@ async def websocket_handler(request):
     client_list = []
     params = request.rel_url.query
     clientId = params['client_id']
-        if client_id is None:
-            exit
-        else:
-            client_list.append(clientId)
-            print('Client Id: "%s" connected' % clientId)
+    if client_id is None:
+        exit
+    else:
+        client_list.append(clientId)
+        print('Client Id: "%s" connected' % clientId)
 
     ws = web.WebSocketResponse()
     await ws.prepare(request)
@@ -29,7 +29,6 @@ async def websocket_handler(request):
   
 
     async for msg in ws:
-
         if msg.type == aiohttp.WSMsgType.TEXT:
             print('ws message recived "%s"' % msg.data)
 
